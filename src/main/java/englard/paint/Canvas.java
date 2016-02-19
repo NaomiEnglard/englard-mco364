@@ -13,19 +13,17 @@ public class Canvas extends JPanel {
 
 	private BufferedImage buffer;
 	private Piont prev = new Piont(0, 0);
+	private Tool tool = new  PencilTool();
 
 	public Canvas() {
 
 		buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+
+		// draw tool mouse listener
 		this.addMouseMotionListener(new MouseMotionListener() {
 
 			public void mouseDragged(MouseEvent e) {
-
-				Graphics g = buffer.getGraphics();
-				g.setColor(Color.blue);
-				g.drawLine(prev.getX(), prev.getY(), e.getX(), e.getY());
-				prev = new Piont(e.getX(), e.getY());
-				
+				tool.mouseDragged(e.getX(), e.getY(), buffer.getGraphics());
 				repaint();
 
 			}
@@ -54,16 +52,13 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				Graphics g = buffer.getGraphics();
-				g.setColor(Color.BLUE);
-				prev = new Piont(e.getX(), e.getY());
-				g.drawLine(e.getX(), e.getY(), e.getX(), e.getY());
-				repaint();
+				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics());
 
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics());
+
 
 			}
 
@@ -73,6 +68,8 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(buffer, 0, 0, null);
+		tool.drawPriview(g);
+
 	}
 
 	public void clearCanvas() {
@@ -81,6 +78,16 @@ public class Canvas extends JPanel {
 
 	public void changeColor(Color color) {
 		// buffer
+	}
+
+	public void lineToolSelected() {
+		tool = new LineTool();
+	}
+	public void pencilToolSelected(){
+		tool = new PencilTool();
+	}
+	public void boxToolSelected(){
+		tool = new BoxTool();
 	}
 
 }

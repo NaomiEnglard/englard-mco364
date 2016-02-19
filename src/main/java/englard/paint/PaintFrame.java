@@ -43,6 +43,45 @@ public class PaintFrame extends JFrame {
 		});
 
 		add(clearBtn, BorderLayout.NORTH);
+		
+		
+		JButton lineTool = new JButton ("Line Tool");
+		lineTool.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+			
+				canvas.lineToolSelected();
+			}
+			
+		});
+		
+		add(lineTool, BorderLayout.SOUTH );
+		
+		JButton boxTool = new JButton ("Box Tool");
+		boxTool.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+			
+				canvas.boxToolSelected();
+			}
+			
+		});
+		
+		add(boxTool, BorderLayout.EAST );
+		
+		
+		JButton pencilTool = new JButton ("Pencil Tool");
+		pencilTool.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+			 canvas.pencilToolSelected();
+				
+			}
+			
+		});
+		
+		add(pencilTool, BorderLayout.WEST );
+
 
 	}
 
