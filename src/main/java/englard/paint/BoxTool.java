@@ -2,6 +2,8 @@ package englard.paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 
 public class BoxTool implements Tool {
 
@@ -16,8 +18,9 @@ public class BoxTool implements Tool {
 	}
 
 	public void mouseReleased(int x, int y, Graphics g) {
-
-		g.drawRect(prev.getX(), prev.getY(), x, y);
+		g.setColor(Color.BLUE);
+		g.drawRect(prev.getX(), prev.getY(), Math.abs(prev.getX() - x),
+				Math.abs(prev.getY() - y));
 	}
 
 	public void mouseDragged(int x, int y, Graphics g) {
@@ -29,7 +32,9 @@ public class BoxTool implements Tool {
 	public void drawPriview(Graphics g) {
 
 		g.setColor(Color.BLUE);
-		g.drawRect(prev.getX(), prev.getY(), previewPiont.getX(), previewPiont.getY());
+		g.drawRect(prev.getX(), prev.getY(),
+				Math.abs(prev.getX() - previewPiont.getX()),
+				Math.abs(previewPiont.getY() - prev.getY()));
 
 	}
 
