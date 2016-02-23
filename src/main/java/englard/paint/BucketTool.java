@@ -23,16 +23,17 @@ public class BucketTool implements Tool {
 
 		Color replacementColor = Color.RED;
 		int targetRGB = img.getRGB(x, y);
+
 		/*
-		 * queue = new LinkedList<Piont>();
-		 * 
-		 * queue.add(originalPiont); while (!queue.isEmpty()) { Piont upTo =
-		 * queue.remove(); floodFillTwo(upTo.getX(), upTo.getY(), targetRGB,
-		 * replacementColor, img); } JOptionPane.showMessageDialog(null,
-		 * "DOme");
+		 * queue = new LinkedList<Piont>(); queue.add(originalPiont); while
+		 * (!queue.isEmpty()) { Piont upTo = queue.remove(); int pX =
+		 * upTo.getX(); int pY = upTo.getY(); if ((pX >= 0) && (pX <
+		 * img.getWidth() && (pY >= 0) && (pY < img .getHeight()))) {
+		 * floodFillTwo(upTo.getX(), upTo.getY(), targetRGB, replacementColor,
+		 * img); } } JOptionPane.showMessageDialog(null, "DOme");
 		 */
 
-		floodFill(x, y, targetRGB, replacementColor, img);
+		 floodFill(x, y, targetRGB, replacementColor, img);
 		return img;
 
 	}
