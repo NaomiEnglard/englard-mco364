@@ -4,16 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 public class BoxTool implements Tool {
 
 	private Piont prev;
 	private Piont previewPiont;
 
-	public void mousePressed(int x, int y, Graphics g) {
+	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
 
-		g.setColor(Color.BLUE);
+		img.getGraphics().setColor(Color.BLUE);
 		prev = new Piont(x, y);
+		return img;
 
 	}
 

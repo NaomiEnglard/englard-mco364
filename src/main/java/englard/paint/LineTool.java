@@ -2,16 +2,16 @@ package englard.paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public class LineTool implements Tool {
 
 	private Piont prev;
 	private Piont previewPiont;
 
-	public void mousePressed(int x, int y, Graphics g) {
-		g.setColor(Color.BLUE);
+	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
 		prev = new Piont(x, y);
-
+		return img;
 	}
 
 	public void mouseReleased(int x, int y, Graphics g) {

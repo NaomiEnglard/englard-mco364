@@ -2,15 +2,18 @@ package englard.paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public class PencilTool implements Tool {
 
 	private Piont prev ;
 
-	public void mousePressed(int x, int y, Graphics g) {
+	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
+		Graphics g = img.getGraphics();
 		g.setColor(Color.BLUE);
 		prev = new Piont(x, y);
 		g.drawLine(x, y, x, y);
+		return img;
 	}
 
 	public void mouseReleased(int x, int y, Graphics g) {

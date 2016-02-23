@@ -29,6 +29,8 @@ public class PaintFrame extends JFrame {
 	private JButton redColor;
 	private JButton lineTool;
 	private JPanel buttonPanel;
+	private JButton paintTool;
+	private JButton elipseTool;
 	JScrollPane scroll;
 
 	public PaintFrame() {
@@ -46,9 +48,11 @@ public class PaintFrame extends JFrame {
 		buttonPanel.add(pencilTool);
 		buttonPanel.add(boxTool);
 		buttonPanel.add(lineTool);
+		buttonPanel.add(paintTool);
+		buttonPanel.add(elipseTool);
 		add(buttonPanel, BorderLayout.NORTH);
 		add(scroll, BorderLayout.CENTER);
-		
+
 	}
 
 	private void createComponents() {
@@ -62,15 +66,18 @@ public class PaintFrame extends JFrame {
 		scroll = new JScrollPane(canvas,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		paintTool = new JButton("Paint Bucket");
+		elipseTool = new JButton("Elipse Tool");
 	}
 
 	private void setProperties() {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 		buttonPanel.setLayout(new GridLayout(1, 5));
-		ImageIcon pencil = new ImageIcon(this.getClass().getResource("./paintBrush.png"));
-		Image resized = pencil.getImage().getScaledInstance(15, 20, Image.SCALE_SMOOTH);
+		ImageIcon pencil = new ImageIcon(this.getClass().getResource(
+				"./paintBrush.png"));
+		Image resized = pencil.getImage().getScaledInstance(15, 20,
+				Image.SCALE_SMOOTH);
 		pencil = new ImageIcon(resized);
 		pencilTool.setIcon(pencil);
 		clearBtn.addActionListener(new ActionListener() {
@@ -86,7 +93,7 @@ public class PaintFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				canvas.boxToolSelected();
+				canvas.toolSelected(new BoxTool());
 			}
 
 		});
@@ -94,7 +101,7 @@ public class PaintFrame extends JFrame {
 		pencilTool.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				canvas.pencilToolSelected();
+				canvas.toolSelected(new PencilTool());
 
 			}
 
@@ -103,7 +110,7 @@ public class PaintFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				canvas.lineToolSelected();
+				canvas.toolSelected(new LineTool());
 			}
 
 		});
@@ -115,6 +122,20 @@ public class PaintFrame extends JFrame {
 
 			}
 
+		});
+
+		paintTool.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				canvas.toolSelected(new BucketTool());
+			}
+		});
+
+		elipseTool.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				canvas.toolSelected(new ElipseTool());
+			}
 		});
 
 	}
