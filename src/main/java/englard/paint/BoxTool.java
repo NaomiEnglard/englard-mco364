@@ -16,7 +16,7 @@ public class BoxTool implements Tool {
 	}
 
 	public void mouseReleased(int x, int y, Graphics g) {
-
+		g.setColor(Color.BLUE);
 		g.drawRect(prev.getX(), prev.getY(), x, y);
 	}
 

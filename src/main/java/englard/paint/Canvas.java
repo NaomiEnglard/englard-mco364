@@ -42,7 +42,7 @@ public class Canvas extends JPanel {
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub0
 
 			}
 
@@ -53,12 +53,14 @@ public class Canvas extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics());
+				repaint();
 
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics());
 
+				repaint();
 
 			}
 
