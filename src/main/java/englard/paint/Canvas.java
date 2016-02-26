@@ -6,14 +6,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
 
 	private BufferedImage buffer;
 	private Piont prev = new Piont(0, 0);
-	private Tool tool = new  PencilTool();
+	private Tool tool = new PencilTool();
 
 	public Canvas() {
 
@@ -52,16 +54,24 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
+<<<<<<< HEAD
 				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics());
 				repaint();
 
+=======
+				buffer = tool.mousePressed(e.getX(), e.getY(), buffer);
+>>>>>>> 6d0746e43871896a20c591f2cd70248020577d16
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics());
+<<<<<<< HEAD
 
 				repaint();
 
+=======
+				repaint();
+>>>>>>> 6d0746e43871896a20c591f2cd70248020577d16
 			}
 
 		});
@@ -82,14 +92,13 @@ public class Canvas extends JPanel {
 		// buffer
 	}
 
-	public void lineToolSelected() {
-		tool = new LineTool();
+	public void toolSelected(Tool tool) {
+		this.tool = tool;
 	}
-	public void pencilToolSelected(){
-		tool = new PencilTool();
-	}
-	public void boxToolSelected(){
-		tool = new BoxTool();
+
+	public void bucketToolSelected() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
