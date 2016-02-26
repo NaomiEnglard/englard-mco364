@@ -33,7 +33,7 @@ public class BucketTool implements Tool {
 		 * img); } } JOptionPane.showMessageDialog(null, "DOme");
 		 */
 
-		 floodFill(x, y, targetRGB, replacementColor, img);
+		floodFill(x, y, targetRGB, replacementColor, img);
 		return img;
 
 	}
