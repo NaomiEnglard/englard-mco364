@@ -2,35 +2,35 @@ package englard.paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+
 
 public class ElipseTool implements Tool {
 
 	private Piont prev;
 	private Piont previewPiont;
 
-	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
+	public void mousePressed(int x, int y, Graphics g, Color c) {
 
 		prev = new Piont(x, y);
-		return img;
+		previewPiont = new Piont(x,y);
 
 	}
 
-	public void mouseReleased(int x, int y, Graphics g) {
-		g.setColor(Color.BLUE);
+	public void mouseReleased(int x, int y, Graphics g, Color c) {
+		g.setColor(c);
 		g.drawOval(prev.getX(), prev.getY(), Math.abs(prev.getX() - x),
 				Math.abs(prev.getY() - y));
 	}
 
-	public void mouseDragged(int x, int y, Graphics g) {
+	public void mouseDragged(int x, int y, Graphics g, Color c) {
 
 		previewPiont = new Piont(x, y);
 
 	}
 
-	public void drawPriview(Graphics g) {
+	public void drawPriview(Graphics g, Color c) {
 
-		g.setColor(Color.BLUE);
+		g.setColor(c);
 		g.drawOval(prev.getX(), prev.getY(),
 				Math.abs(prev.getX() - previewPiont.getX()),
 				Math.abs(previewPiont.getY() - prev.getY()));
