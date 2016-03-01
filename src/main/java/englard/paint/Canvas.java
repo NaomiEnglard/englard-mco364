@@ -6,9 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
@@ -54,24 +52,17 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
-<<<<<<< HEAD
-				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics());
+
+				buffer = tool.mousePressed(e.getX(), e.getY(), buffer);
 				repaint();
 
-=======
-				buffer = tool.mousePressed(e.getX(), e.getY(), buffer);
->>>>>>> 6d0746e43871896a20c591f2cd70248020577d16
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics());
-<<<<<<< HEAD
 
 				repaint();
 
-=======
-				repaint();
->>>>>>> 6d0746e43871896a20c591f2cd70248020577d16
 			}
 
 		});

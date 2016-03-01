@@ -1,47 +1,54 @@
-package englard.paint;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-
-public class BoxTool implements Tool {
-
-	private Piont prev;
-	private Piont previewPiont;
-
-	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
-
-		img.getGraphics().setColor(Color.BLUE);
-		prev = new Piont(x, y);
-		return img;
-
-	}
-
-	public void mouseReleased(int x, int y, Graphics g) {
-		g.setColor(Color.BLUE);
-<<<<<<< HEAD
-		g.drawRect(prev.getX(), prev.getY(), x, y);
-=======
-		g.drawRect(prev.getX(), prev.getY(), Math.abs(prev.getX() - x),
-				Math.abs(prev.getY() - y));
->>>>>>> 6d0746e43871896a20c591f2cd70248020577d16
-	}
-
-	public void mouseDragged(int x, int y, Graphics g) {
-
-		previewPiont = new Piont(x, y);
-
-	}
-
-	public void drawPriview(Graphics g) {
-
-		g.setColor(Color.BLUE);
-		g.drawRect(prev.getX(), prev.getY(),
-				Math.abs(prev.getX() - previewPiont.getX()),
-				Math.abs(previewPiont.getY() - prev.getY()));
-
-	}
-
-}
+1 package englard.paint; 
+2 
+ 
+3 import java.awt.Color; 
+4 import java.awt.Graphics; 
+5 
+ 
+6 public class BoxTool implements Tool { 
+7 
+ 
+8 	private Piont prev; 
+9 	private Piont previewPiont; 
+10 
+ 
+11 	public void mousePressed(int x, int y, Graphics g, Color c) { 
+12 
+ 
+13 		g.setColor(c); 
+14 		prev = new Piont(x, y); 
+15 		previewPiont = new Piont(x, y); 
+16 
+ 
+17 	} 
+18 
+ 
+19 	public void mouseReleased(int x, int y, Graphics g, Color c) { 
+20 		g.setColor(c); 
+21 		g.drawRect(prev.getX(), prev.getY(), Math.abs(prev.getX() - x), 
+22 				Math.abs(prev.getY() - y)); 
+23 	} 
+24 
+ 
+25 	public void mouseDragged(int x, int y, Graphics g, Color c) { 
+26 
+ 
+27 		previewPiont = new Piont(x, y); 
+28 
+ 
+29 	} 
+30 
+ 
+31 	public void drawPriview(Graphics g, Color c) { 
+32 
+ 
+33 		g.setColor(c); 
+34 		g.drawRect(prev.getX(), prev.getY(), 
+35 				Math.abs(prev.getX() - previewPiont.getX()), 
+36 				Math.abs(previewPiont.getY() - prev.getY())); 
+37 
+ 
+38 	} 
+39 
+ 
+40 } 
