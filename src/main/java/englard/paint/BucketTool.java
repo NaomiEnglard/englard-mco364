@@ -3,7 +3,6 @@ package englard.paint;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -20,7 +19,7 @@ public class BucketTool implements Tool {
 		this.canvas = canvas;
 	}
 
-	@Override
+	
 	public void mousePressed(int x, int y, Graphics g, Color c) {
 		originalPiont = new Piont(x, y);
 
@@ -63,19 +62,18 @@ public class BucketTool implements Tool {
 
 	
 
-	@Override
+	
 	public void mouseReleased(int x, int y, Graphics g, Color c) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+
 	public void mouseDragged(int x, int y, Graphics g, Color c) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void drawPriview(Graphics g, Color c) {
 		// TODO Auto-generated method stub
 
