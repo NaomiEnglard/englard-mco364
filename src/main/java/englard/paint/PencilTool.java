@@ -8,27 +8,28 @@ public class PencilTool implements Tool {
 
 	private Piont prev ;
 
-	public BufferedImage mousePressed(int x, int y, BufferedImage img) {
-		Graphics g = img.getGraphics();
-		g.setColor(Color.BLUE);
+	public void mousePressed(int x, int y, Graphics g, Color c) {
+	
+		g.setColor(c);
+		System.out.println(c);
 		prev = new Piont(x, y);
 		g.drawLine(x, y, x, y);
-		return img;
+		
 	}
 
-	public void mouseReleased(int x, int y, Graphics g) {
+	public void mouseReleased(int x, int y, Graphics g, Color c) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void mouseDragged(int x, int y, Graphics g) {
+	public void mouseDragged(int x, int y, Graphics g, Color c) {
 
-		g.setColor(Color.blue);
+		g.setColor(c);
 		g.drawLine(prev.getX(), prev.getY(), x, y);
 		prev = new Piont(x, y);
 	}
 
-	public void drawPriview(Graphics g) {
+	public void drawPriview(Graphics g, Color c) {
 		
 	}
 

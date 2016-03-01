@@ -2,28 +2,42 @@ package englard.paint;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+<<<<<<< HEAD
+=======
+import java.util.Stack;
+
+>>>>>>> f679a05f2c2718686b610a966b0ece2e32cda4e6
 import javax.swing.JPanel;
 
 public class Canvas extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private BufferedImage buffer;
-	private Piont prev = new Piont(0, 0);
-	private Tool tool = new PencilTool();
+	private Tool tool;
+	private Stack<BufferedImage> undo;
+	private Stack<BufferedImage> redo;
+	private Color color;
 
 	public Canvas() {
-
+		tool = new PencilTool();
 		buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-
+		undo = new Stack<>();
+		redo = new Stack<>();
+		color = Color.BLACK;
 		// draw tool mouse listener
 		this.addMouseMotionListener(new MouseMotionListener() {
 
 			public void mouseDragged(MouseEvent e) {
-				tool.mouseDragged(e.getX(), e.getY(), buffer.getGraphics());
+				tool.mouseDragged(e.getX(), e.getY(), buffer.getGraphics(), color);
 				repaint();
 
 			}
@@ -52,6 +66,7 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
+<<<<<<< HEAD
 
 				buffer = tool.mousePressed(e.getX(), e.getY(), buffer);
 				repaint();
@@ -61,6 +76,15 @@ public class Canvas extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics());
 
+=======
+				pushImageToStack(undo);
+				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics(), color);
+				repaint();
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics(), color);
+>>>>>>> f679a05f2c2718686b610a966b0ece2e32cda4e6
 				repaint();
 
 			}
@@ -71,12 +95,13 @@ public class Canvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(buffer, 0, 0, null);
-		tool.drawPriview(g);
+		tool.drawPriview(g, color);
 
 	}
 
 	public void clearCanvas() {
 		buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		repaint();
 	}
 
 	public void changeColor(Color color) {
@@ -87,9 +112,42 @@ public class Canvas extends JPanel {
 		this.tool = tool;
 	}
 
-	public void bucketToolSelected() {
-		// TODO Auto-generated method stub
+	public BufferedImage getImage() {
+		return this.buffer;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.buffer = image;
+	}
+
+	public void undo() {
+		if (undo.isEmpty()) {
+			return;
+		}
+		pushImageToStack(redo);
+		buffer = undo.pop();
+		repaint();
 
 	}
 
+	public void redo() {
+		if (redo.isEmpty()) {
+			return;
+		}
+		buffer = redo.pop();
+		repaint();
+	}
+
+	private void pushImageToStack(Stack<BufferedImage> stack) {
+		BufferedImage stackImage = new BufferedImage(buffer.getWidth(),
+				buffer.getHeight(), buffer.getType());
+		Graphics2D g2d = stackImage.createGraphics();
+		g2d.drawImage(buffer, 0, 0, null);
+		stack.push(stackImage);
+
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }

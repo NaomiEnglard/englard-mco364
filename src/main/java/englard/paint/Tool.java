@@ -1,16 +1,16 @@
 package englard.paint;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 public interface Tool {
 
-	BufferedImage mousePressed(int x, int y, BufferedImage img);
+	void mousePressed(int x, int y, Graphics g, Color c);
 
-	void mouseReleased(int x, int y, Graphics g);
+	void mouseReleased(int x, int y, Graphics g, Color c);
 
-	void mouseDragged(int x, int y, Graphics g);
+	void mouseDragged(int x, int y, Graphics g, Color c);
 
-	void drawPriview(Graphics g);
+	void drawPriview(Graphics g, Color c);
 
 }
