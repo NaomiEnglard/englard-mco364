@@ -11,7 +11,6 @@ public class PencilTool implements Tool {
 	public void mousePressed(int x, int y, Graphics g, Color c) {
 	
 		g.setColor(c);
-		System.out.println(c);
 		prev = new Piont(x, y);
 		g.drawLine(x, y, x, y);
 		

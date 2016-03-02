@@ -25,7 +25,7 @@ public class Canvas extends JPanel {
 
 	public Canvas() {
 		tool = new PencilTool();
-		buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		buffer = new BufferedImage(1120, 600, BufferedImage.TYPE_INT_ARGB);
 		undo = new Stack<BufferedImage>();
 		redo = new Stack<BufferedImage>();
 		color = Color.BLACK;
@@ -84,7 +84,7 @@ public class Canvas extends JPanel {
 	}
 
 	public void clearCanvas() {
-		buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		buffer = new BufferedImage(1100, 600, BufferedImage.TYPE_INT_ARGB);
 		repaint();
 	}
 

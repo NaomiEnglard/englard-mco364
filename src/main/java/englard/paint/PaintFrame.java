@@ -1,6 +1,7 @@
 package englard.paint;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,6 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class PaintFrame extends JFrame {
 
@@ -35,13 +39,10 @@ public class PaintFrame extends JFrame {
 	private JButton redo;
 	private JScrollPane scroll;
 	private JColorChooser chooser;
-	private JButton color;
-	private JPanel east;
-	private JButton colorChoice;
 
 	public PaintFrame() {
 		setTitle("Paint");
-		setSize(800, 600);
+		setSize(1120, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		createComponents();
@@ -52,6 +53,7 @@ public class PaintFrame extends JFrame {
 	}
 
 	private void addComponents() {
+		simplfyChooser();
 		buttonPanel.add(clearBtn);
 		buttonPanel.add(pencilTool);
 		buttonPanel.add(boxTool);
@@ -60,44 +62,75 @@ public class PaintFrame extends JFrame {
 		buttonPanel.add(elipseTool);
 		buttonPanel.add(undo);
 		buttonPanel.add(redo);
-		buttonPanel.add(color);
-		east.add(chooser);
-		east.add(colorChoice);
+		buttonPanel.add(chooser);
 		add(buttonPanel, BorderLayout.NORTH);
 		add(scroll, BorderLayout.CENTER);
-		add(east, BorderLayout.EAST);
+
+	}
+
+	private void simplfyChooser() {
+		AbstractColorChooserPanel[] oldPanels = chooser.getChooserPanels();
+		for (int i = 0; i < oldPanels.length; i++) {
+			String clsName = oldPanels[i].getClass().getName();
+			if (!clsName
+					.equals("javax.swing.colorchooser.DefaultSwatchChooserPanel")) {
+				chooser.removeChooserPanel(oldPanels[i]);
+			} else { // if is swatches{
+				oldPanels[i].setBackground(Color.WHITE);
+			}
+		}
+
+		chooser.setPreviewPanel(new JPanel());
 
 	}
 
 	private void createComponents() {
 		canvas = new Canvas();
 		clearBtn = new JButton("CLEAR");
-		pencilTool = new JButton("Pencil Tool");
-		boxTool = new JButton("Box Tool");
-		lineTool = new JButton("Line Tool");
+		pencilTool = new JButton();
+		boxTool = new JButton();
+		lineTool = new JButton();
 		buttonPanel = new JPanel();
-		scroll = new JScrollPane(canvas, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+		scroll = new JScrollPane(canvas,
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		paintTool = new JButton("Paint Bucket");
-		elipseTool = new JButton("Elipse Tool");
-		undo = new JButton("undo");
-		redo = new JButton("redo");
+		paintTool = new JButton();
+		elipseTool = new JButton();
+		undo = new JButton();
+		redo = new JButton();
 		chooser = new JColorChooser();
-		color = new JButton("Choose Color");
-		colorChoice = new JButton("Choose color");
-		east = new JPanel();
+
 	}
 
 	private void setProperties() {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
-		buttonPanel.setLayout(new GridLayout(1, 8));
-		ImageIcon pencil = new ImageIcon(this.getClass().getResource("./paintBrush.png"));
-		Image resized = pencil.getImage().getScaledInstance(15, 20, Image.SCALE_SMOOTH);
-		pencil = new ImageIcon(resized);
-		pencilTool.setIcon(pencil);
-		east.setLayout(new FlowLayout());
-		east.setVisible(false);
+		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel.setBackground(Color.WHITE);
+		buttonPanel.setPreferredSize(new Dimension(1100, 120));
+		pencilTool.setIcon(new ImageIcon("./pencilIcon.png"));
+		boxTool.setIcon(new ImageIcon("./boxIcon.png"));
+		lineTool.setIcon(new ImageIcon("./lineIcon.png"));
+		paintTool.setIcon(new ImageIcon("./paintBucketIcon.png"));
+		elipseTool.setIcon(new ImageIcon("./elipseIcon.png"));
+		undo.setIcon(new ImageIcon("./undoIcon.png"));
+		redo.setIcon(new ImageIcon("./redoIcon.png"));
+
+		setButtonOpaque(pencilTool);
+		setButtonOpaque(boxTool);
+		setButtonOpaque(lineTool);
+		setButtonOpaque(elipseTool);
+		setButtonOpaque(paintTool);
+		setButtonOpaque(undo);
+		setButtonOpaque(redo);
+		setIconImage(new ImageIcon("./paintIcon.png").getImage());
+
+	}
+
+	private void setButtonOpaque(JButton button) {
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
 
 	}
 
@@ -163,22 +196,13 @@ public class PaintFrame extends JFrame {
 			}
 		});
 
-		color.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				east.setVisible(true);
-				east.setSize(new Dimension(100, 100));
+		chooser.getSelectionModel().addChangeListener(new ChangeListener() {
 
-				repaint();
-			}
-		});
-
-		colorChoice.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
 				canvas.setColor(chooser.getColor());
-				east.setVisible(false);
-				east.setSize(new Dimension(0, 0));
-				repaint();
 			}
+
 		});
 
 	}
