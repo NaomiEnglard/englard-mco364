@@ -118,6 +118,7 @@ public class Canvas extends JPanel {
 		if (redo.isEmpty()) {
 			return;
 		}
+		pushImageToStack(undo);
 		buffer = redo.pop();
 		repaint();
 	}

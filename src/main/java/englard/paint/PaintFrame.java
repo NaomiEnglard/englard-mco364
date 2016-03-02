@@ -9,16 +9,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 public class PaintFrame extends JFrame {
 
@@ -79,8 +76,7 @@ public class PaintFrame extends JFrame {
 		boxTool = new JButton("Box Tool");
 		lineTool = new JButton("Line Tool");
 		buttonPanel = new JPanel();
-		scroll = new JScrollPane(canvas,
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+		scroll = new JScrollPane(canvas, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		paintTool = new JButton("Paint Bucket");
 		elipseTool = new JButton("Elipse Tool");
@@ -95,11 +91,9 @@ public class PaintFrame extends JFrame {
 	private void setProperties() {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
-		buttonPanel.setLayout(new GridLayout(1, 5));
-		ImageIcon pencil = new ImageIcon(this.getClass().getResource(
-				"./paintBrush.png"));
-		Image resized = pencil.getImage().getScaledInstance(15, 20,
-				Image.SCALE_SMOOTH);
+		buttonPanel.setLayout(new GridLayout(1, 8));
+		ImageIcon pencil = new ImageIcon(this.getClass().getResource("./paintBrush.png"));
+		Image resized = pencil.getImage().getScaledInstance(15, 20, Image.SCALE_SMOOTH);
 		pencil = new ImageIcon(resized);
 		pencilTool.setIcon(pencil);
 		east.setLayout(new FlowLayout());
@@ -172,22 +166,20 @@ public class PaintFrame extends JFrame {
 		color.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				east.setVisible(true);
-				east.setSize(new Dimension(100,100));
+				east.setSize(new Dimension(100, 100));
 
 				repaint();
 			}
 		});
-		
+
 		colorChoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				canvas.setColor(chooser.getColor());
 				east.setVisible(false);
-				east.setSize(new Dimension(0,0));
+				east.setSize(new Dimension(0, 0));
 				repaint();
 			}
 		});
-		
-
 
 	}
 
