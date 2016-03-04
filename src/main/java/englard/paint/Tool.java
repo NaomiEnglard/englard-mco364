@@ -1,16 +1,22 @@
 package englard.paint;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-public interface Tool {
+abstract public class Tool {
 
-	void mousePressed(int x, int y, Graphics g, Color c);
+	protected PaintProperties properties;
 
-	void mouseReleased(int x, int y, Graphics g, Color c);
+	public Tool(PaintProperties properties) {
 
-	void mouseDragged(int x, int y, Graphics g, Color c);
+		this.properties = properties;
+	}
 
-	void drawPriview(Graphics g, Color c);
+	abstract void mousePressed(int x, int y, Graphics g);
+
+	abstract void mouseReleased(int x, int y, Graphics g);
+
+	abstract void mouseDragged(int x, int y, Graphics g);
+
+	abstract void drawPriview(Graphics g);
 
 }

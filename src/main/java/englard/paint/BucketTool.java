@@ -7,27 +7,26 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class BucketTool implements Tool {
+public class BucketTool extends Tool {
 
+	
 	private Piont originalPiont;
 	private Queue<Piont> queue;
-	private BufferedImage img;
-	private Canvas canvas;
+	 
 
-	public BucketTool(Canvas canvas) {
-		this.img = canvas.getImage();
-		this.canvas = canvas;
+	public BucketTool(PaintProperties properties) {
+		super(properties);
 	}
 
 	
-	public void mousePressed(int x, int y, Graphics g, Color c) {
+	public void mousePressed(int x, int y, Graphics g) {
 		originalPiont = new Piont(x, y);
-
-		Color replacementColor = c;
+		BufferedImage img = properties.getImage();
+		Color replacementColor = this.properties.getColor();
 		int srcRGB = img.getRGB(x, y);
-
 		queue = new LinkedList<Piont>();
 		queue.add(originalPiont);
+		//if original is the same color as chossen returnif()
 		while (!queue.isEmpty()) {
 			Piont upTo = queue.remove();
 			int pX = upTo.getX();
@@ -36,16 +35,16 @@ public class BucketTool implements Tool {
 					&& (pX < img.getWidth() && (pY >= 0) && (pY < img
 							.getHeight()))) {
 				fill(upTo.getX(), upTo.getY(), srcRGB,
-						replacementColor);
+						replacementColor, img);
 			}
 		}
 
 		
-		canvas.setImage(img);
+		super.properties.setImage(img);
 
 	}
 
-	public void fill(int x, int y, int srcColor, Color replacementColor) {
+	public void fill(int x, int y, int srcColor, Color replacementColor, BufferedImage img) {
 
 		if (img.getRGB(x, y) != srcColor)
 			return;
@@ -63,18 +62,18 @@ public class BucketTool implements Tool {
 	
 
 	
-	public void mouseReleased(int x, int y, Graphics g, Color c) {
+	public void mouseReleased(int x, int y, Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
 
 
-	public void mouseDragged(int x, int y, Graphics g, Color c) {
+	public void mouseDragged(int x, int y, Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void drawPriview(Graphics g, Color c) {
+	public void drawPriview(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}

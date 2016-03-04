@@ -1,36 +1,40 @@
 package englard.paint;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-public class BoxTool implements Tool {
+public class BoxTool extends Tool {
+
+	public BoxTool(PaintProperties proerties) {
+		super(proerties);
+		
+	}
 
 	private Piont prev;
 	private Piont previewPiont;
 
-	public void mousePressed(int x, int y, Graphics g, Color c) {
+	public void mousePressed(int x, int y, Graphics g) {
 
-		g.setColor(c);
+		g.setColor(super.properties.getColor());
 		prev = new Piont(x, y);
 		previewPiont = new Piont(x, y);
 
 	}
 
-	public void mouseReleased(int x, int y, Graphics g, Color c) {
-		g.setColor(c);
+	public void mouseReleased(int x, int y, Graphics g) {
+		g.setColor(super.properties.getColor());
 		g.drawRect(prev.getX(), prev.getY(), Math.abs(prev.getX() - x),
 				Math.abs(prev.getY() - y));
 	}
 
-	public void mouseDragged(int x, int y, Graphics g, Color c) {
+	public void mouseDragged(int x, int y, Graphics g) {
 
 		previewPiont = new Piont(x, y);
 
 	}
 
-	public void drawPriview(Graphics g, Color c) {
+	public void drawPriview(Graphics g) {
 
-		g.setColor(c);
+		g.setColor(super.properties.getColor());
 		g.drawRect(prev.getX(), prev.getY(),
 				Math.abs(prev.getX() - previewPiont.getX()),
 				Math.abs(previewPiont.getY() - prev.getY()));

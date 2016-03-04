@@ -17,23 +17,27 @@ public class Canvas extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private BufferedImage buffer;
+	// private BufferedImage buffer;
 	private Tool tool;
 	private Stack<BufferedImage> undo;
 	private Stack<BufferedImage> redo;
-	private Color color;
+	private PaintProperties properties;
 
 	public Canvas() {
-		tool = new PencilTool();
-		buffer = new BufferedImage(1120, 600, BufferedImage.TYPE_INT_ARGB);
+		properties = new PaintProperties();
+		properties.setWeight(1120);
+		properties.setHeight(600);
+		properties.setImage(new BufferedImage(properties.getWeight(), properties.getHeight(),
+				BufferedImage.TYPE_INT_ARGB));
+		tool = new PencilTool(properties);
 		undo = new Stack<BufferedImage>();
 		redo = new Stack<BufferedImage>();
-		color = Color.BLACK;
+		this.properties.setColor(Color.BLACK);
 		// draw tool mouse listener
 		this.addMouseMotionListener(new MouseMotionListener() {
 
 			public void mouseDragged(MouseEvent e) {
-				tool.mouseDragged(e.getX(), e.getY(), buffer.getGraphics(), color);
+				tool.mouseDragged(e.getX(), e.getY(), properties.getImage().getGraphics());
 				repaint();
 
 			}
@@ -63,12 +67,12 @@ public class Canvas extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 				pushImageToStack(undo);
-				tool.mousePressed(e.getX(), e.getY(), buffer.getGraphics(), color);
+				tool.mousePressed(e.getX(), e.getY(), properties.getImage().getGraphics());
 				repaint();
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				tool.mouseReleased(e.getX(), e.getY(), buffer.getGraphics(), color);
+				tool.mouseReleased(e.getX(), e.getY(), properties.getImage().getGraphics());
 				repaint();
 
 			}
@@ -78,13 +82,15 @@ public class Canvas extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(buffer, 0, 0, null);
-		tool.drawPriview(g, color);
+		g.drawImage(this.properties.getImage(), 0, 0, null);
+		tool.drawPriview(g);
 
 	}
 
 	public void clearCanvas() {
-		buffer = new BufferedImage(1100, 600, BufferedImage.TYPE_INT_ARGB);
+		this.properties.setImage(new BufferedImage(properties.getWeight(), properties.getHeight(),
+				BufferedImage.TYPE_INT_ARGB));
+
 		repaint();
 	}
 
@@ -97,11 +103,11 @@ public class Canvas extends JPanel {
 	}
 
 	public BufferedImage getImage() {
-		return this.buffer;
+		return this.properties.getImage();
 	}
 
 	public void setImage(BufferedImage image) {
-		this.buffer = image;
+		this.properties.setImage(image);
 	}
 
 	public void undo() {
@@ -109,7 +115,7 @@ public class Canvas extends JPanel {
 			return;
 		}
 		pushImageToStack(redo);
-		buffer = undo.pop();
+		properties.setImage(undo.pop());
 		repaint();
 
 	}
@@ -119,19 +125,24 @@ public class Canvas extends JPanel {
 			return;
 		}
 		pushImageToStack(undo);
-		buffer = redo.pop();
+		this.properties.setImage(redo.pop());
 		repaint();
 	}
 
 	private void pushImageToStack(Stack<BufferedImage> stack) {
-		BufferedImage stackImage = new BufferedImage(buffer.getWidth(), buffer.getHeight(), buffer.getType());
+		BufferedImage stackImage = new BufferedImage(properties.getImage().getWidth(), properties.getImage()
+				.getHeight(), properties.getImage().getType());
 		Graphics2D g2d = stackImage.createGraphics();
-		g2d.drawImage(buffer, 0, 0, null);
+		g2d.drawImage(properties.getImage(), 0, 0, null);
 		stack.push(stackImage);
 
 	}
 
 	public void setColor(Color color) {
-		this.color = color;
+		this.properties.setColor(color);
+	}
+
+	public PaintProperties getProperties() {
+		return this.properties;
 	}
 }

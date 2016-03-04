@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,6 +37,8 @@ public class PaintFrame extends JFrame {
 	private JButton redo;
 	private JScrollPane scroll;
 	private JColorChooser chooser;
+	private ToolButton[] toolButtons;
+	private ActionListener listener;
 
 	public PaintFrame() {
 		setTitle("Paint");
@@ -54,12 +54,12 @@ public class PaintFrame extends JFrame {
 
 	private void addComponents() {
 		simplfyChooser();
+		for (ToolButton button : toolButtons) {
+			buttonPanel.add(button);
+			this.setButtonOpaque(button);
+
+		}
 		buttonPanel.add(clearBtn);
-		buttonPanel.add(pencilTool);
-		buttonPanel.add(boxTool);
-		buttonPanel.add(lineTool);
-		buttonPanel.add(paintTool);
-		buttonPanel.add(elipseTool);
 		buttonPanel.add(undo);
 		buttonPanel.add(redo);
 		buttonPanel.add(chooser);
@@ -72,8 +72,7 @@ public class PaintFrame extends JFrame {
 		AbstractColorChooserPanel[] oldPanels = chooser.getChooserPanels();
 		for (int i = 0; i < oldPanels.length; i++) {
 			String clsName = oldPanels[i].getClass().getName();
-			if (!clsName
-					.equals("javax.swing.colorchooser.DefaultSwatchChooserPanel")) {
+			if (!clsName.equals("javax.swing.colorchooser.DefaultSwatchChooserPanel")) {
 				chooser.removeChooserPanel(oldPanels[i]);
 			} else { // if is swatches{
 				oldPanels[i].setBackground(Color.WHITE);
@@ -85,20 +84,21 @@ public class PaintFrame extends JFrame {
 	}
 
 	private void createComponents() {
+
 		canvas = new Canvas();
 		clearBtn = new JButton("CLEAR");
-		pencilTool = new JButton();
-		boxTool = new JButton();
-		lineTool = new JButton();
 		buttonPanel = new JPanel();
-		scroll = new JScrollPane(canvas,
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+		scroll = new JScrollPane(canvas, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		paintTool = new JButton();
-		elipseTool = new JButton();
+
 		undo = new JButton();
 		redo = new JButton();
 		chooser = new JColorChooser();
+		toolButtons = new ToolButton[] { new ToolButton(new PencilTool(canvas.getProperties()), "/pencilIcon.png"),
+				new ToolButton(new BoxTool(canvas.getProperties()), "/boxIcon.png"),
+				new ToolButton(new LineTool(canvas.getProperties()), "/lineIcon.png"),
+				new ToolButton(new BucketTool(canvas.getProperties()), "/paintBucketIcon.png"),
+				new ToolButton(new ElipseTool(canvas.getProperties()), "/elipseIcon.png"), };
 
 	}
 
@@ -108,19 +108,8 @@ public class PaintFrame extends JFrame {
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.setPreferredSize(new Dimension(1100, 120));
-		pencilTool.setIcon(new ImageIcon("./pencilIcon.png"));
-		boxTool.setIcon(new ImageIcon("./boxIcon.png"));
-		lineTool.setIcon(new ImageIcon("./lineIcon.png"));
-		paintTool.setIcon(new ImageIcon("./paintBucketIcon.png"));
-		elipseTool.setIcon(new ImageIcon("./elipseIcon.png"));
-		undo.setIcon(new ImageIcon("./undoIcon.png"));
-		redo.setIcon(new ImageIcon("./redoIcon.png"));
-
-		setButtonOpaque(pencilTool);
-		setButtonOpaque(boxTool);
-		setButtonOpaque(lineTool);
-		setButtonOpaque(elipseTool);
-		setButtonOpaque(paintTool);
+		undo.setIcon(new ImageIcon(getClass().getResource("/undoIcon.png")));
+		redo.setIcon(new ImageIcon(getClass().getResource("/redoIcon.png")));
 		setButtonOpaque(undo);
 		setButtonOpaque(redo);
 		setIconImage(new ImageIcon("./paintIcon.png").getImage());
@@ -135,6 +124,20 @@ public class PaintFrame extends JFrame {
 	}
 
 	private void addListeners() {
+		listener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ToolButton button = (ToolButton) e.getSource();
+				canvas.toolSelected(button.getTool());
+
+			}
+
+		};
+		for (ToolButton button : toolButtons) {
+			button.addActionListener(listener);
+
+		}
+
 		clearBtn.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -143,45 +146,6 @@ public class PaintFrame extends JFrame {
 
 			}
 
-		});
-		boxTool.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-				canvas.toolSelected(new BoxTool());
-			}
-
-		});
-
-		pencilTool.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				canvas.toolSelected(new PencilTool());
-
-			}
-
-		});
-		lineTool.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-				canvas.toolSelected(new LineTool());
-			}
-
-		});
-
-		paintTool.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				canvas.toolSelected(new BucketTool(canvas));
-			}
-		});
-
-		elipseTool.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				canvas.toolSelected(new ElipseTool());
-			}
 		});
 
 		undo.addActionListener(new ActionListener() {
@@ -198,7 +162,6 @@ public class PaintFrame extends JFrame {
 
 		chooser.getSelectionModel().addChangeListener(new ChangeListener() {
 
-			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				canvas.setColor(chooser.getColor());
 			}

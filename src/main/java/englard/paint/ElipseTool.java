@@ -1,38 +1,38 @@
 package englard.paint;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
+public class ElipseTool extends Tool {
 
-public class ElipseTool implements Tool {
+	public ElipseTool(PaintProperties properties) {
+		super(properties);
+	}
 
 	private Piont prev;
 	private Piont previewPiont;
 
-	public void mousePressed(int x, int y, Graphics g, Color c) {
+	public void mousePressed(int x, int y, Graphics g) {
 
 		prev = new Piont(x, y);
-		previewPiont = new Piont(x,y);
+		previewPiont = new Piont(x, y);
 
 	}
 
-	public void mouseReleased(int x, int y, Graphics g, Color c) {
-		g.setColor(c);
-		g.drawOval(prev.getX(), prev.getY(), Math.abs(prev.getX() - x),
-				Math.abs(prev.getY() - y));
+	public void mouseReleased(int x, int y, Graphics g) {
+		g.setColor(super.properties.getColor());
+		g.drawOval(prev.getX(), prev.getY(), Math.abs(prev.getX() - x), Math.abs(prev.getY() - y));
 	}
 
-	public void mouseDragged(int x, int y, Graphics g, Color c) {
+	public void mouseDragged(int x, int y, Graphics g) {
 
 		previewPiont = new Piont(x, y);
 
 	}
 
-	public void drawPriview(Graphics g, Color c) {
+	public void drawPriview(Graphics g) {
 
-		g.setColor(c);
-		g.drawOval(prev.getX(), prev.getY(),
-				Math.abs(prev.getX() - previewPiont.getX()),
+		g.setColor(super.properties.getColor());
+		g.drawOval(prev.getX(), prev.getY(), Math.abs(prev.getX() - previewPiont.getX()),
 				Math.abs(previewPiont.getY() - prev.getY()));
 	}
 
