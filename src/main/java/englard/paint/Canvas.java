@@ -17,22 +17,20 @@ public class Canvas extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// private BufferedImage buffer;
 	private Tool tool;
 	private Stack<BufferedImage> undo;
 	private Stack<BufferedImage> redo;
 	private PaintProperties properties;
 
-	public Canvas() {
-		properties = new PaintProperties();
-		properties.setWeight(1120);
-		properties.setHeight(600);
-		properties.setImage(new BufferedImage(properties.getWeight(), properties.getHeight(),
+	public Canvas(final PaintProperties properties) {
+		this.properties = properties;
+		properties.setImage(new BufferedImage(properties.getWidth(), properties.getHeight(),
 				BufferedImage.TYPE_INT_ARGB));
+		this.properties.setColor(Color.BLACK);
 		tool = new PencilTool(properties);
 		undo = new Stack<BufferedImage>();
 		redo = new Stack<BufferedImage>();
-		this.properties.setColor(Color.BLACK);
+
 		// draw tool mouse listener
 		this.addMouseMotionListener(new MouseMotionListener() {
 

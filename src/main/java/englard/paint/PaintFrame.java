@@ -19,6 +19,10 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 public class PaintFrame extends JFrame {
 
 	/**
@@ -39,13 +43,15 @@ public class PaintFrame extends JFrame {
 	private JColorChooser chooser;
 	private ToolButton[] toolButtons;
 	private ActionListener listener;
+	
 
-	public PaintFrame() {
+	@Inject
+	public PaintFrame(PaintProperties p) {
 		setTitle("Paint");
 		setSize(1120, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		createComponents();
+		createComponents(p);
 		setProperties();
 		addComponents();
 		addListeners();
@@ -83,9 +89,13 @@ public class PaintFrame extends JFrame {
 
 	}
 
-	private void createComponents() {
-
-		canvas = new Canvas();
+	private void createComponents(PaintProperties properties ) {
+		Injector injector = Guice.createInjector(new PaintModule());
+		properties =injector.getInstance(PaintProperties.class);
+		//properties = new PaintProperties();
+		properties.setWidth(1120);
+		properties.setHeight(600);
+		canvas = new Canvas(properties);
 		clearBtn = new JButton("CLEAR");
 		buttonPanel = new JPanel();
 		scroll = new JScrollPane(canvas, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -171,7 +181,8 @@ public class PaintFrame extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		PaintFrame f = new PaintFrame();
+		Injector injector = Guice.createInjector(new PaintModule());
+		PaintFrame f = injector.getInstance(PaintFrame.class);
 		f.setVisible(true);
 
 	}
