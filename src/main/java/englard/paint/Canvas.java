@@ -9,8 +9,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
+import javax.inject.Singleton;
 import javax.swing.JPanel;
 
+import com.google.inject.Inject;
+
+@Singleton
 public class Canvas extends JPanel {
 
 	/**
@@ -21,7 +25,7 @@ public class Canvas extends JPanel {
 	private Stack<BufferedImage> undo;
 	private Stack<BufferedImage> redo;
 	private PaintProperties properties;
-
+@Inject
 	public Canvas(final PaintProperties properties) {
 		this.properties = properties;
 		properties.setImage(new BufferedImage(properties.getWidth(), properties.getHeight(),

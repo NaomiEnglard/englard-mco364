@@ -3,6 +3,9 @@ package englard.paint;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class PaintProperties {
 
 	private Color color;
@@ -13,12 +16,13 @@ public class PaintProperties {
 	private BufferedImage image;
 
 	public PaintProperties() {
-		this.width = 800;
+
+		this.width = 1120;
 		this.height = 600;
 		this.color = Color.BLACK;
 		this.image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
-		this.weight =1;
-		
+		this.weight = 1;
+
 	}
 
 	public Color getColor() {
