@@ -35,7 +35,7 @@ public class PaintToolBar extends Container {
 	private Canvas canvas;
 
 	@Inject
-	public PaintToolBar(Canvas c) {
+	public PaintToolBar(Canvas c, CanvasRepaintManager manager) {
 		this.canvas = c;
 
 		// create components
@@ -43,11 +43,12 @@ public class PaintToolBar extends Container {
 		undo = new JButton();
 		redo = new JButton();
 		chooser = new JColorChooser();
-		toolButtons = new ToolButton[] { new ToolButton(new PencilTool(canvas.getProperties()), "/pencilIcon.png"),
-				new ToolButton(new BoxTool(canvas.getProperties()), "/boxIcon.png"),
-				new ToolButton(new LineTool(canvas.getProperties()), "/lineIcon.png"),
-				new ToolButton(new BucketTool(canvas.getProperties()), "/paintBucketIcon.png"),
-				new ToolButton(new ElipseTool(canvas.getProperties()), "/elipseIcon.png"), };
+		toolButtons = new ToolButton[] { 
+				new ToolButton(new PencilTool(manager,canvas.getProperties()), "/pencilIcon.png"),
+				new ToolButton(new BoxTool(manager,canvas.getProperties()), "/boxIcon.png"),
+				new ToolButton(new LineTool(manager,canvas.getProperties()), "/lineIcon.png"),
+				new ToolButton(new BucketTool(manager,canvas.getProperties()), "/paintBucketIcon.png"),
+				new ToolButton(new ElipseTool(manager,canvas.getProperties()), "/elipseIcon.png"), };
 
 		// Properties
 		this.setLayout(new FlowLayout());

@@ -4,8 +4,8 @@ import java.awt.Graphics;
 
 public class ElipseTool extends Tool {
 
-	public ElipseTool(PaintProperties properties) {
-		super(properties);
+	public ElipseTool(CanvasRepaintManager manger, PaintProperties properties) {
+		super(manger,properties);
 	}
 
 	private Piont prev;

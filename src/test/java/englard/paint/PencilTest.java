@@ -12,7 +12,9 @@ public class PencilTest {
 	public void testMousePressed() {
 		PaintProperties properites = Mockito.mock(PaintProperties.class);
 		Mockito.when(properites.getColor()).thenReturn(Color.RED);
-		PencilTool tool = new PencilTool(properites);
+		CanvasRepaintManager manger = Mockito.mock(CanvasRepaintManager.class);
+
+		PencilTool tool = new PencilTool(manger,properites);
 		Graphics g = Mockito.mock(Graphics.class);
 		tool.mousePressed(1, 2, g);
 	
@@ -27,7 +29,9 @@ public class PencilTest {
 	public void testMouseDragged(){
 		PaintProperties properites = Mockito.mock(PaintProperties.class);
 		Mockito.when(properites.getColor()).thenReturn(Color.RED);
-		PencilTool tool = new PencilTool(properites);
+		CanvasRepaintManager manger = Mockito.mock(CanvasRepaintManager.class);
+
+		PencilTool tool = new PencilTool(manger,properites);
 		Graphics g = Mockito.mock(Graphics.class);
 		tool.mousePressed(5, 10, g);
 		tool.mouseDragged(6, 11, g);

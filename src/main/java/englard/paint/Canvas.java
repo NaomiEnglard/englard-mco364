@@ -26,12 +26,12 @@ public class Canvas extends JPanel {
 	private Stack<BufferedImage> redo;
 	private PaintProperties properties;
 @Inject
-	public Canvas(final PaintProperties properties) {
+	public Canvas(final PaintProperties properties, CanvasRepaintManager manager) {
 		this.properties = properties;
 		properties.setImage(new BufferedImage(properties.getWidth(), properties.getHeight(),
 				BufferedImage.TYPE_INT_ARGB));
 		this.properties.setColor(Color.BLACK);
-		tool = new PencilTool(properties);
+		tool = new PencilTool(manager,properties);
 		undo = new Stack<BufferedImage>();
 		redo = new Stack<BufferedImage>();
 

@@ -14,8 +14,8 @@ public class BucketTool extends Tool {
 	private Queue<Piont> queue;
 	 
 
-	public BucketTool(PaintProperties properties) {
-		super(properties);
+	public BucketTool(CanvasRepaintManager manger, PaintProperties properties) {
+		super(manger,properties);
 	}
 
 	

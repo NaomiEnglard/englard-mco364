@@ -4,8 +4,8 @@ import java.awt.Graphics;
 
 public class PencilTool extends Tool {
 
-	public PencilTool(PaintProperties properties) {
-		super(properties);
+	public PencilTool(CanvasRepaintManager manger, PaintProperties properties) {
+		super(manger,properties);
 	}
 
 	private Piont prev;

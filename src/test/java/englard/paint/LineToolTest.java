@@ -12,7 +12,8 @@ public class LineToolTest {
 	public void testMouseReleased() {
 		PaintProperties properites = Mockito.mock(PaintProperties.class);
 		Mockito.when(properites.getColor()).thenReturn(Color.RED);
-		LineTool tool = new LineTool(properites);
+		CanvasRepaintManager manger = Mockito.mock(CanvasRepaintManager.class);
+		LineTool tool = new LineTool(manger,properites);
 		Graphics g = Mockito.mock(Graphics.class);
 		tool.mousePressed(5, 5, g);
 		tool.mouseReleased(10, 10, g);
@@ -27,7 +28,8 @@ public class LineToolTest {
 	public void testDraw() {
 		PaintProperties properites = Mockito.mock(PaintProperties.class);
 		Mockito.when(properites.getColor()).thenReturn(Color.RED);
-		LineTool tool = new LineTool(properites);
+		CanvasRepaintManager manger = Mockito.mock(CanvasRepaintManager.class);
+		LineTool tool = new LineTool(manger,properites);
 		Graphics g = Mockito.mock(Graphics.class);
 		tool.mousePressed(5, 5, g);
 		tool.mouseReleased(10, 10, g);
@@ -36,6 +38,11 @@ public class LineToolTest {
 		Mockito.verify(g).drawLine(5, 5, 10, 10);
 		Mockito.verify(g).setColor(Color.RED);
 
+	}
+	
+	@Test
+	public void testRepaint(){
+		//verify that repaint was called with perameter u want
 	}
 	
 

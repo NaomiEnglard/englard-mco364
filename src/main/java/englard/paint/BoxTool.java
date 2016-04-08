@@ -4,8 +4,8 @@ import java.awt.Graphics;
 
 public class BoxTool extends Tool {
 
-	public BoxTool(PaintProperties proerties) {
-		super(proerties);
+	public BoxTool(CanvasRepaintManager manger, PaintProperties properties) {
+		super(manger,properties);
 		
 	}
 
